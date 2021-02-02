@@ -23,7 +23,7 @@ android {
 
 dependencies {
 
-    implementation(Libraries.kotlinStdLib)
+    implementation(project(Modules.presentation))
     implementation(Libraries.appCompat)
     implementation(Libraries.ktxCore)
     implementation(Libraries.material)
