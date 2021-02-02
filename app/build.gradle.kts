@@ -4,6 +4,7 @@ plugins {
 }
 
 android {
+    buildFeatures.viewBinding = true
     compileSdkVersion(AndroidSdk.compile)
     defaultConfig {
         applicationId = "com.j1c1m1b1.udf"
