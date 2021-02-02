@@ -27,6 +27,7 @@ dependencies {
     implementation(Libraries.appCompat)
     implementation(Libraries.ktxCore)
     implementation(Libraries.material)
+    implementation(Libraries.viewModelKtx)
 
     testImplementation (TestLibraries.junit4)
     androidTestImplementation (TestLibraries.junitExt)

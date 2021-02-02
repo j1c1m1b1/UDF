@@ -29,6 +29,7 @@ object Libraries {
         const val material = "1.2.1"
         const val ktx = "1.3.2"
         const val coroutinesVersion = "1.4.2"
+        const val lifecycleKtxVersion = "2.2.0"
     }
 
     const val kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
@@ -36,6 +37,7 @@ object Libraries {
     const val appCompat = "androidx.appcompat:appcompat:${Versions.appCompat}"
     const val ktxCore = "androidx.core:core-ktx:${Versions.ktx}"
     const val material = "com.google.android.material:material:${Versions.material}"
+    const val viewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycleKtxVersion}"
 }
 
 object TestLibraries {
