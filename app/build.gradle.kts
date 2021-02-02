@@ -14,22 +14,27 @@ android {
         testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
-        getByName("release") {
+        getByName("debug") {
+            isDebuggable = true
+            isShrinkResources = false
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
 }
 
 dependencies {
-
     implementation(project(Modules.presentation))
     implementation(Libraries.appCompat)
     implementation(Libraries.ktxCore)
     implementation(Libraries.material)
     implementation(Libraries.viewModelKtx)
+    implementation(Libraries.constraintLayout)
 
-    testImplementation (TestLibraries.junit4)
-    androidTestImplementation (TestLibraries.junitExt)
-    androidTestImplementation (TestLibraries.espresso)
+    testImplementation(TestLibraries.junit4)
+    androidTestImplementation(TestLibraries.junitExt)
+    androidTestImplementation(TestLibraries.espresso)
 }

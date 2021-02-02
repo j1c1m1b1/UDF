@@ -7,7 +7,7 @@ object BuildPlugins {
 
     const val androidGradlePlugin = "com.android.tools.build:gradle:${Versions.buildToolsVersion}"
     const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-    const val javaLibrary= "java-library"
+    const val javaLibrary = "java-library"
     const val kotlin = "kotlin"
     const val androidApplication = "com.android.application"
     const val kotlinAndroid = "kotlin-android"
@@ -30,14 +30,19 @@ object Libraries {
         const val ktx = "1.3.2"
         const val coroutinesVersion = "1.4.2"
         const val lifecycleKtxVersion = "2.2.0"
+        const val constraintLayoutVersion = "2.0.4"
     }
 
     const val kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-    const val kotlinCoroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutinesVersion}"
+    const val kotlinCoroutines =
+        "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutinesVersion}"
     const val appCompat = "androidx.appcompat:appcompat:${Versions.appCompat}"
     const val ktxCore = "androidx.core:core-ktx:${Versions.ktx}"
     const val material = "com.google.android.material:material:${Versions.material}"
-    const val viewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycleKtxVersion}"
+    const val viewModelKtx =
+        "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycleKtxVersion}"
+    const val constraintLayout =
+        "androidx.constraintlayout:constraintlayout:${Versions.constraintLayoutVersion}"
 }
 
 object TestLibraries {

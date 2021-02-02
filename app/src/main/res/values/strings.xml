@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">UDF</string>
+    <string name="dispatch_event">Dispatch Event</string>
+    <string name="loading">Loading…</string>
+    <string name="error">Error</string>
 </resources>
