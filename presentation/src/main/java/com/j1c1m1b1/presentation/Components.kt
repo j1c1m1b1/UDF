@@ -10,4 +10,13 @@ interface Action<S : State> {
     suspend fun perform(oldState: S): Flow<S>
 }
 
-interface State
+interface State {
+    interface Loading : State
+    interface Complete<T : Any?> : State {
+        val result: T
+    }
+
+    interface Error : State {
+        val throwable: Throwable?
+    }
+}
