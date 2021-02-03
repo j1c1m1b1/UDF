@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     id(BuildPlugins.androidApplication)
     id(BuildPlugins.kotlinAndroid)
@@ -27,6 +29,12 @@ android {
     }
 }
 
+tasks {
+    withType<KotlinCompile> {
+        kotlinOptions.jvmTarget = "1.8"
+    }
+}
+
 dependencies {
     implementation(project(Modules.presentation))
     implementation(Libraries.appCompat)
@@ -34,6 +42,7 @@ dependencies {
     implementation(Libraries.material)
     implementation(Libraries.viewModelKtx)
     implementation(Libraries.constraintLayout)
+    implementation(Libraries.fragments)
 
     testImplementation(TestLibraries.junit4)
     androidTestImplementation(TestLibraries.junitExt)

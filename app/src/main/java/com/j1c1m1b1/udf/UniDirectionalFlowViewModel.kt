@@ -29,11 +29,7 @@ abstract class UniDirectionalFlowViewModel<E : UiEvent<A, S>, A : Action<S>, S :
 
     protected open val initialEvent: E? = null
 
-    init {
-        startEventsProcessing()
-    }
-
-    private fun startEventsProcessing() {
+    protected fun startEventsProcessing() {
         scope.launch {
             events.consumeAsStatesFlow {
                 stateLiveData.value = it

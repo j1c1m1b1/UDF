@@ -39,7 +39,9 @@ sealed class MainAction : Action<MainState> {
                 Random.nextBoolean()
             }.let {
                 MainState.Error(throwable = it)
-            }.also { emit(it) }
+            }.also {
+                emit(it)
+            }
         }
     }
 }

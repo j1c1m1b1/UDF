@@ -31,6 +31,7 @@ object Libraries {
         const val coroutinesVersion = "1.4.2"
         const val lifecycleKtxVersion = "2.2.0"
         const val constraintLayoutVersion = "2.0.4"
+        const val fragmentKtxVersion = "1.2.5"
     }
 
     const val kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
@@ -43,6 +44,7 @@ object Libraries {
         "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycleKtxVersion}"
     const val constraintLayout =
         "androidx.constraintlayout:constraintlayout:${Versions.constraintLayoutVersion}"
+    const val fragments = "androidx.fragment:fragment-ktx:${Versions.fragmentKtxVersion}"
 }
 
 object TestLibraries {
