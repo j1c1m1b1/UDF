@@ -29,15 +29,17 @@ abstract class UniDirectionalFlowViewModel<E : UiEvent<A, S>, A : Action<S>, S :
 
     final override val events: Channel<E> = Channel()
 
-    protected fun startEventsProcessing() {
+    init {
+        startEventsProcessing()
+    }
+
+    private fun startEventsProcessing() {
         scope.launch {
             events.consumeAsStatesFlow {
                 stateLiveData.value = it
             }
         }
     }
-
-    fun getCurrentState(): S? = stateLiveData.value
 
     override fun Flow<A>.toState(): Flow<S> =
         this.map { action ->

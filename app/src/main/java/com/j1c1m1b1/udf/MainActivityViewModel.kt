@@ -11,10 +11,6 @@ class MainActivityViewModel : UniDirectionalFlowViewModel<MainEvent, MainAction,
     override val initialState: MainState
         get() = MainState.Initial
 
-    init {
-        startEventsProcessing()
-    }
-
     fun sendError() {
         MainEvent.ErrorRequest.also { dispatch(it) }
     }
