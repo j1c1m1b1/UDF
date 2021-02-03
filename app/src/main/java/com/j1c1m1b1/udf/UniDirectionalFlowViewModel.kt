@@ -21,13 +21,13 @@ import kotlinx.coroutines.launch
 abstract class UniDirectionalFlowViewModel<E : UiEvent<A, S>, A : Action<S>, S : State> :
     ViewModel(), UiEventsProcessor<E, A, S> {
 
-    protected abstract val stateLiveData: MutableLiveData<S>
+    protected abstract val initialState: S
+
+    private val stateLiveData: MutableLiveData<S> = initializeStateLiveData()
 
     final override val scope: CoroutineScope = viewModelScope
 
     final override val events: Channel<E> = Channel()
-
-    protected open val initialEvent: E? = null
 
     protected fun startEventsProcessing() {
         scope.launch {
@@ -35,16 +35,19 @@ abstract class UniDirectionalFlowViewModel<E : UiEvent<A, S>, A : Action<S>, S :
                 stateLiveData.value = it
             }
         }
-
-        initialEvent?.let { dispatch(it) }
     }
 
     fun getCurrentState(): S? = stateLiveData.value
 
     override fun Flow<A>.toState(): Flow<S> =
         this.map { action ->
-            action.perform(requireNotNull(stateLiveData.value))
+            action.perform(stateLiveData.requireValue())
         }.flattenMerge()
+
+    private fun initializeStateLiveData(): MutableLiveData<S> =
+        MutableLiveData(initialState)
+
+    private fun MutableLiveData<S>.requireValue() = requireNotNull(value) { "State is null!" }
 
     fun observe(owner: LifecycleOwner, observingBlock: (S?) -> Unit): Observer<S> =
         Observer<S>(observingBlock).also { stateLiveData.observe(owner, it) }

@@ -1,6 +1,5 @@
 package com.j1c1m1b1.udf
 
-import androidx.lifecycle.MutableLiveData
 import com.j1c1m1b1.presentation.main.MainAction
 import com.j1c1m1b1.presentation.main.MainEvent
 import com.j1c1m1b1.presentation.main.MainState
@@ -8,7 +7,9 @@ import kotlinx.coroutines.FlowPreview
 
 @FlowPreview
 class MainActivityViewModel : UniDirectionalFlowViewModel<MainEvent, MainAction, MainState>() {
-    override val stateLiveData: MutableLiveData<MainState> = MutableLiveData()
+
+    override val initialState: MainState
+        get() = MainState.Initial
 
     init {
         startEventsProcessing()
@@ -23,6 +24,6 @@ class MainActivityViewModel : UniDirectionalFlowViewModel<MainEvent, MainAction,
     }
 
     private companion object {
-        const val MESSAGE_TEMPLATE = "Message: %d"
+        const val MESSAGE_TEMPLATE = "Message: %s"
     }
 }
