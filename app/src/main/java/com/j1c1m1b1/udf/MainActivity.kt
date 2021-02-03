@@ -3,6 +3,8 @@ package com.j1c1m1b1.udf
 import android.os.Bundle
 import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import com.google.android.material.snackbar.Snackbar
 import com.j1c1m1b1.presentation.main.MainState
 import com.j1c1m1b1.udf.databinding.ActivityMainBinding
@@ -47,10 +49,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     private fun renderLoading() {
+        binding.progressBar.isVisible = true
         switchButtonState(false)
     }
 
     private fun MainState.Error.renderError() {
+        binding.progressBar.isGone = true
         Snackbar.make(
             binding.root,
             getMessage(),
@@ -64,6 +68,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         this.throwable?.message ?: getString(R.string.unknown_error)
 
     private fun renderComplete() {
+        binding.progressBar.isGone = true
         binding.apply {
             eventsButton.isEnabled = true
             errorButton.isEnabled = true
