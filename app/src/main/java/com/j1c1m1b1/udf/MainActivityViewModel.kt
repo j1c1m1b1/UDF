@@ -20,10 +20,6 @@ class MainActivityViewModel : UniDirectionalFlowViewModel<MainEvent, MainAction,
     }
 
     fun sendSuccess(message: String) {
-        MainEvent.SendSuccess(message = MESSAGE_TEMPLATE.format(message)).also { dispatch(it) }
-    }
-
-    private companion object {
-        const val MESSAGE_TEMPLATE = "Message: %s"
+        MainEvent.SendSuccess(message = message).also { dispatch(it) }
     }
 }

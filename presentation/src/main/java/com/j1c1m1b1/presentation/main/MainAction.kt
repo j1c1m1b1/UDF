@@ -4,11 +4,12 @@ import com.j1c1m1b1.presentation.Action
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import java.util.concurrent.TimeUnit
 import kotlin.random.Random
 
 sealed class MainAction : Action<MainState> {
     protected val delayMillis: Long
-        get() = Random.nextLong(3L, 10L)
+        get() = Random.nextLong(1L, 5L).let { TimeUnit.SECONDS.toMillis(it) }
 
     data class SendSuccess(private val message: String) : MainAction() {
         override suspend fun perform(oldState: MainState): Flow<MainState> = flow {
@@ -22,14 +23,16 @@ sealed class MainAction : Action<MainState> {
             }
         }
 
-        private fun String?.toNewMessage(): String =
-            when (this) {
-                null -> message
-                else -> listOf(this, message).joinToString()
+        private fun String?.toNewMessage(): String {
+            val newMessage = MESSAGE_TEMPLATE.format(message)
+            return when (this) {
+                null -> newMessage
+                else -> listOf(this, newMessage).joinToString()
             }
+        }
 
         private companion object {
-            const val MESSAGE_TEMPLATE = "Message: %d"
+            const val MESSAGE_TEMPLATE = "Message: %s"
         }
     }
 
