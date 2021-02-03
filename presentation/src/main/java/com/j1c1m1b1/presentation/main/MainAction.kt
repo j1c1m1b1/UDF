@@ -8,10 +8,10 @@ import java.util.concurrent.TimeUnit
 import kotlin.random.Random
 
 sealed class MainAction : Action<MainState> {
-    protected val delayMillis: Long
-        get() = Random.nextLong(1L, 5L).let { TimeUnit.SECONDS.toMillis(it) }
-
     data class SendSuccess(private val message: String) : MainAction() {
+        private val delayMillis: Long
+            get() = loadingSecondsRange.random().let { TimeUnit.SECONDS.toMillis(it) }
+
         override suspend fun perform(oldState: MainState): Flow<MainState> = flow {
             emit(MainState.Loading)
             val previousMessage = oldState.let { it as? MainState.Complete }?.result
@@ -31,6 +31,7 @@ sealed class MainAction : Action<MainState> {
 
         private companion object {
             const val MESSAGE_TEMPLATE = "Message: %s"
+            val loadingSecondsRange: LongRange = 1L..5L
         }
     }
 
