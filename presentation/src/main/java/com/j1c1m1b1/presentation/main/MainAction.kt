@@ -23,13 +23,11 @@ sealed class MainAction : Action<MainState> {
             }
         }
 
-        private fun String?.toNewMessage(): String {
-            val newMessage = MESSAGE_TEMPLATE.format(message)
-            return when (this) {
-                null -> newMessage
-                else -> listOf(this, newMessage).joinToString()
+        private fun String?.toNewMessage(): String =
+            buildString {
+                appendLine(MESSAGE_TEMPLATE.format(message))
+                this@toNewMessage?.let { append(it) }
             }
-        }
 
         private companion object {
             const val MESSAGE_TEMPLATE = "Message: %s"

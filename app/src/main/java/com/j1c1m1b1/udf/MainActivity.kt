@@ -9,11 +9,19 @@ import com.google.android.material.snackbar.Snackbar
 import com.j1c1m1b1.presentation.main.MainState
 import com.j1c1m1b1.udf.databinding.ActivityMainBinding
 import kotlinx.coroutines.FlowPreview
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import kotlin.random.Random
 
 @FlowPreview
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     private val viewModel: MainActivityViewModel by viewModels()
+
+    private val dateFormat: DateFormat
+        get() = SimpleDateFormat(DATE_PATTERN, Locale.getDefault())
 
     override fun inflateBinding(): ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
 
@@ -21,11 +29,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         super.onCreate(savedInstanceState)
         viewModel.observe(this) { it?.render() }
         binding.errorButton.setOnClickListener { viewModel.sendError() }
-        binding.eventsButton.setOnClickListener { viewModel.sendSuccess(getTimeStamp()) }
+        binding.eventsButton.setOnClickListener {
+            viewModel.sendSuccess(
+                Random.nextLong().toString()
+            )
+        }
     }
 
     private fun getTimeStamp(): String =
-        System.currentTimeMillis().toString()
+        Date(System.currentTimeMillis()).let { dateFormat.format(it) }
 
     private fun switchButtonState(isEnabled: Boolean) {
         binding.apply {
@@ -38,8 +50,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         log()
         when (this) {
             is MainState.Loading -> renderLoading()
-            is MainState.Error -> renderError()
-            is MainState.Complete -> renderComplete()
+            is MainState.Error -> render()
+            is MainState.Complete -> render()
             else -> return
         }
     }
@@ -53,7 +65,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         switchButtonState(false)
     }
 
-    private fun MainState.Error.renderError() {
+    private fun MainState.Error.render() {
         binding.progressBar.isGone = true
         Snackbar.make(
             binding.root,
@@ -67,7 +79,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     private fun MainState.Error.getMessage(): String =
         this.throwable?.message ?: getString(R.string.unknown_error)
 
-    private fun renderComplete() {
+    private fun MainState.Complete.render() {
+        showAlertDialog(result)
         binding.progressBar.isGone = true
         binding.apply {
             eventsButton.isEnabled = true
@@ -80,5 +93,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             appendLine(getString(R.string.state_format, newText, getTimeStamp()))
             text?.let { append(it) }
         }.also { text = it }
+    }
+
+    private companion object {
+        const val DATE_PATTERN = "HH:mm:ss"
     }
 }
