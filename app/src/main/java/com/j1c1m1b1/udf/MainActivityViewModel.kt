@@ -16,10 +16,10 @@ class MainActivityViewModel : UniDirectionalFlowViewModel<MainEvent, MainAction,
     }
 
     fun sendError() {
-        MainEvent.SendError.also { dispatch(it) }
+        MainEvent.ErrorRequest.also { dispatch(it) }
     }
 
     fun sendSuccess(message: String) {
-        MainEvent.SendSuccess(message = message).also { dispatch(it) }
+        MainEvent.SuccessRequest(message = message).also { dispatch(it) }
     }
 }
