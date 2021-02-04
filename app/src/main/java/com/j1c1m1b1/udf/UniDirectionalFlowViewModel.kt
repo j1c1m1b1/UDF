@@ -12,9 +12,6 @@ import com.j1c1m1b1.presentation.UiEventsProcessor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flattenMerge
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 @FlowPreview
@@ -24,6 +21,9 @@ abstract class UniDirectionalFlowViewModel<E : UiEvent<A, S>, A : Action<S>, S :
     protected abstract val initialState: S
 
     private val stateLiveData: MutableLiveData<S> = initializeStateLiveData()
+
+    final override val oldState: S
+        get() = stateLiveData.requireValue()
 
     final override val scope: CoroutineScope = viewModelScope
 
@@ -40,11 +40,6 @@ abstract class UniDirectionalFlowViewModel<E : UiEvent<A, S>, A : Action<S>, S :
             }
         }
     }
-
-    override fun Flow<A>.toState(): Flow<S> =
-        this.map { action ->
-            action.perform(stateLiveData.requireValue())
-        }.flattenMerge()
 
     private fun initializeStateLiveData(): MutableLiveData<S> =
         MutableLiveData(initialState)

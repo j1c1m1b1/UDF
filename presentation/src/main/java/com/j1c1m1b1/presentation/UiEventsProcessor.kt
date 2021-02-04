@@ -12,7 +12,8 @@ import kotlinx.coroutines.launch
 
 @FlowPreview
 interface UiEventsProcessor<E : UiEvent<A, S>, A : Action<S>, S : State> {
-    fun Flow<A>.toState(): Flow<S>
+
+    val oldState: S
     val events: Channel<E>
     val scope: CoroutineScope
 
@@ -30,5 +31,9 @@ interface UiEventsProcessor<E : UiEvent<A, S>, A : Action<S>, S : State> {
 
     private fun Flow<E>.toAction(): Flow<A> = this.flatMapMerge { event ->
         event.toAction()
+    }
+
+    private fun Flow<A>.toState(): Flow<S> = this.flatMapMerge { action ->
+        action.perform(oldState)
     }
 }
