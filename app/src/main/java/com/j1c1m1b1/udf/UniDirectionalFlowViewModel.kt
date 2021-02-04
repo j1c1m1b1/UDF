@@ -9,7 +9,6 @@ import com.j1c1m1b1.presentation.Action
 import com.j1c1m1b1.presentation.State
 import com.j1c1m1b1.presentation.UiEvent
 import com.j1c1m1b1.presentation.UiEventsProcessor
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
@@ -25,8 +24,6 @@ abstract class UniDirectionalFlowViewModel<E : UiEvent<A, S>, A : Action<S>, S :
     final override val oldState: S
         get() = stateLiveData.requireValue()
 
-    final override val scope: CoroutineScope = viewModelScope
-
     final override val events: Channel<E> = Channel()
 
     init {
@@ -34,11 +31,15 @@ abstract class UniDirectionalFlowViewModel<E : UiEvent<A, S>, A : Action<S>, S :
     }
 
     private fun startEventsProcessing() {
-        scope.launch {
+        viewModelScope.launch {
             events.consumeAsStatesFlow {
                 stateLiveData.value = it
             }
         }
+    }
+
+    protected fun E.dispatch() {
+        viewModelScope.launch { dispatchEvent(this@dispatch) }
     }
 
     private fun initializeStateLiveData(): MutableLiveData<S> =

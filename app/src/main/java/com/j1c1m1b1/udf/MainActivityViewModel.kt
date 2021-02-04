@@ -12,10 +12,10 @@ class MainActivityViewModel : UniDirectionalFlowViewModel<MainEvent, MainAction,
         get() = MainState.Initial
 
     fun sendError() {
-        MainEvent.ErrorRequest.also { dispatch(it) }
+        MainEvent.ErrorRequest.dispatch()
     }
 
     fun sendSuccess(message: String) {
-        MainEvent.SuccessRequest(message = message).also { dispatch(it) }
+        MainEvent.SuccessRequest(message = message).dispatch()
     }
 }
