@@ -1,4 +1,4 @@
-const val kotlinVersion = "1.4.21"
+const val kotlinVersion = "1.4.30"
 
 object BuildPlugins {
     private object Versions {
