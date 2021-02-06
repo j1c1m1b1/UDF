@@ -36,16 +36,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         }
     }
 
-    private fun getTimeStamp(): String =
-        Date(System.currentTimeMillis()).let { dateFormat.format(it) }
-
-    private fun switchButtonState(isEnabled: Boolean) {
-        binding.apply {
-            eventsButton.isEnabled = isEnabled
-            errorButton.isEnabled = isEnabled
-        }
-    }
-
     private fun MainState.render() {
         log()
         when (this) {
@@ -54,10 +44,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             is MainState.Complete -> render()
             else -> return
         }
-    }
-
-    private fun MainState.log() {
-        this::class.simpleName?.let { binding.textView.appendText(it) }
     }
 
     private fun renderLoading() {
@@ -82,10 +68,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     private fun MainState.Complete.render() {
         showAlertDialog(result)
         binding.progressBar.isGone = true
+        switchButtonState(true)
+    }
+
+    private fun switchButtonState(isEnabled: Boolean) {
         binding.apply {
-            eventsButton.isEnabled = true
-            errorButton.isEnabled = true
+            eventsButton.isEnabled = isEnabled
+            errorButton.isEnabled = isEnabled
         }
+    }
+
+    private fun MainState.log() {
+        this::class.simpleName?.let { binding.textView.appendText(it) }
     }
 
     private fun TextView.appendText(newText: String) {
@@ -94,6 +88,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             text?.let { append(it) }
         }.also { text = it }
     }
+
+    private fun getTimeStamp(): String =
+        Date(System.currentTimeMillis()).let { dateFormat.format(it) }
 
     private companion object {
         const val DATE_PATTERN = "HH:mm:ss"
