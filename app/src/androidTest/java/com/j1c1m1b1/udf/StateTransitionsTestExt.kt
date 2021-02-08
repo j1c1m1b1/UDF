@@ -18,9 +18,7 @@ internal inline fun <reified S : State, A : Action<S>, E : UiEvent<A, S>> E.disp
         toAction()
             .flatMapConcat { it.perform { initialState } }
             .collectIndexed { index, actualState ->
-                expectedStates.getOrNull(index).also { expectedState ->
-                    assertEquals(expectedState, actualState)
-                }
+                assertEquals(expectedStates.getOrNull(index), actualState)
             }
     }
 }
