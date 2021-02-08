@@ -4,7 +4,6 @@ import com.j1c1m1b1.presentation.Action
 import com.j1c1m1b1.presentation.State
 import com.j1c1m1b1.presentation.UiEvent
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectIndexed
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.runBlocking
@@ -17,7 +16,7 @@ internal inline fun <reified S : State, A : Action<S>, E : UiEvent<A, S>> E.disp
 ) {
     runBlocking {
         toAction()
-            .performWith(initialState)
+            .flatMapConcat { it.perform { initialState } }
             .collectIndexed { index, actualState ->
                 expectedStates.getOrNull(index).also { expectedState ->
                     assertEquals(expectedState, actualState)
@@ -25,8 +24,3 @@ internal inline fun <reified S : State, A : Action<S>, E : UiEvent<A, S>> E.disp
             }
     }
 }
-
-@FlowPreview
-internal suspend fun <S : State, A : Action<S>> Flow<A>.performWith(initialState: S) =
-    flatMapConcat { it.perform { initialState } }
-
