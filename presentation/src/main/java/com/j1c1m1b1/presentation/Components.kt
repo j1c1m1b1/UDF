@@ -7,7 +7,7 @@ interface UiEvent<A : Action<S>, S : State> {
 }
 
 interface Action<S : State> {
-    suspend fun perform(oldState: S): Flow<S>
+    suspend fun perform(getPreviousState: () -> S): Flow<S>
 }
 
 interface State {

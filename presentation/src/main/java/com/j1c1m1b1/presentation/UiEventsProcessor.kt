@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.flatMapMerge
 @FlowPreview
 interface UiEventsProcessor<E : UiEvent<A, S>, A : Action<S>, S : State> {
 
-    val oldState: S
+    val getPreviousState: () -> S
     val events: Channel<E>
 
     suspend fun Channel<E>.consumeAsStatesFlow(collectHandler: (state: S) -> (Unit)) {
@@ -31,6 +31,6 @@ interface UiEventsProcessor<E : UiEvent<A, S>, A : Action<S>, S : State> {
     }
 
     private fun Flow<A>.toState(): Flow<S> = this.flatMapMerge { action ->
-        action.perform(oldState)
+        action.perform(getPreviousState)
     }
 }

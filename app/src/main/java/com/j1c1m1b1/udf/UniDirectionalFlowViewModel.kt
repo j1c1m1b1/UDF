@@ -21,8 +21,8 @@ abstract class UniDirectionalFlowViewModel<E : UiEvent<A, S>, A : Action<S>, S :
 
     private val stateLiveData: MutableLiveData<S> = initializeStateLiveData()
 
-    final override val oldState: S
-        get() = stateLiveData.requireValue()
+    final override val getPreviousState: () -> S
+        get() = { stateLiveData.requireValue() }
 
     final override val events: Channel<E> = Channel()
 

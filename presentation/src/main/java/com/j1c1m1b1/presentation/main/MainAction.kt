@@ -13,9 +13,9 @@ sealed class MainAction : Action<MainState> {
 
     data class SendSuccess(private val message: String) : MainAction() {
 
-        override suspend fun perform(oldState: MainState): Flow<MainState> = flow {
+        override suspend fun perform(getPreviousState: () -> MainState): Flow<MainState> = flow {
             emit(MainState.Loading)
-            val newMessage = oldState.getNewMessage()
+            val newMessage = getPreviousState().getNewMessage()
             emit(MainState.Complete(result = newMessage))
         }
 
@@ -39,11 +39,10 @@ sealed class MainAction : Action<MainState> {
     }
 
     object SendError : MainAction() {
-        override suspend fun perform(oldState: MainState): Flow<MainState> = flow {
+        override suspend fun perform(getPreviousState: () -> MainState): Flow<MainState> = flow {
             emit(MainState.Loading)
             val exception = getException()
             emit(MainState.Error(throwable = exception))
-
         }
 
         /**
