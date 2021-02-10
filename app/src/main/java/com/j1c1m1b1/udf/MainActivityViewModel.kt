@@ -1,8 +1,8 @@
 package com.j1c1m1b1.udf
 
-import com.j1c1m1b1.presentation.main.MainAction
-import com.j1c1m1b1.presentation.main.MainEvent
-import com.j1c1m1b1.presentation.main.MainState
+import com.j1c1m1b1.udf.components.MainAction
+import com.j1c1m1b1.udf.components.MainEvent
+import com.j1c1m1b1.udf.components.MainState
 import kotlinx.coroutines.FlowPreview
 
 @FlowPreview

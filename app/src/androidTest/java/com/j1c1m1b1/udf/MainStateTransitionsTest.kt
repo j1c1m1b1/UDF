@@ -1,10 +1,10 @@
 package com.j1c1m1b1.udf
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.j1c1m1b1.presentation.main.ErroneousOperationSimulator
-import com.j1c1m1b1.presentation.main.MainEvent
-import com.j1c1m1b1.presentation.main.MainState
-import com.j1c1m1b1.presentation.main.SuccessOperationSimulator
+import com.j1c1m1b1.udf.components.ErroneousOperationSimulator
+import com.j1c1m1b1.udf.components.MainEvent
+import com.j1c1m1b1.udf.components.MainState
+import com.j1c1m1b1.udf.components.SuccessOperationSimulator
 import kotlinx.coroutines.FlowPreview
 import org.junit.Test
 import org.junit.runner.RunWith

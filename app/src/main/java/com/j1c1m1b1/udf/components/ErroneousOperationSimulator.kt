@@ -1,4 +1,4 @@
-package com.j1c1m1b1.presentation.main
+package com.j1c1m1b1.udf.components
 
 interface ErroneousOperationSimulator {
 

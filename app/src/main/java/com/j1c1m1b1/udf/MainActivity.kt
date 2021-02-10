@@ -6,7 +6,7 @@ import androidx.activity.viewModels
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import com.google.android.material.snackbar.Snackbar
-import com.j1c1m1b1.presentation.main.MainState
+import com.j1c1m1b1.udf.components.MainState
 import com.j1c1m1b1.udf.databinding.ActivityMainBinding
 import kotlinx.coroutines.FlowPreview
 import java.text.DateFormat
